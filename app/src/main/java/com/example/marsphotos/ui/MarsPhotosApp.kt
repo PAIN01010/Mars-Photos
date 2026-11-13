@@ -9,9 +9,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.marsphotos.MarsPhotosApplication
 import com.example.marsphotos.R
 import com.example.marsphotos.ui.screens.HomeScreen
 import com.example.marsphotos.ui.screens.MarsViewModel
@@ -20,7 +23,18 @@ import com.example.marsphotos.ui.screens.MarsViewModel
 @Composable
 fun MarsPhotosApp() {
 
-    val marsViewModel: MarsViewModel = viewModel()
+    val application =
+        LocalContext.current.applicationContext as MarsPhotosApplication
+
+    val repository = application.container.marsPhotosRepository
+
+    val factory = remember(repository) {
+        MarsViewModel.provideFactory(repository)
+    }
+
+    val marsViewModel: MarsViewModel = viewModel(
+        factory = factory
+    )
 
     Scaffold(
         topBar = {
