@@ -54,7 +54,6 @@ fun MarsPhotosApp() {
         ) {
             HomeScreen(
                 marsUiState = marsViewModel.marsUiState,
-                marsPhotos = marsViewModel.marsPhotos,
                 contentPadding = innerPadding
             )
         }
